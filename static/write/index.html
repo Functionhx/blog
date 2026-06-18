@@ -33,7 +33,6 @@
     注意：这是前端软门（看源码可绕），真正的写权限靠 Sveltia 登录时的 GitHub 令牌。
     换密码：本地执行  printf '%s' "你的密码" | shasum -a 256
     把输出第一段填进下面的 PASSWORD_HASH。
-    默认密码：paper-edit-2026（请尽快改成你自己的）
   -->
   <div id="gate">
     <form id="pw-form" autocomplete="off">
@@ -46,8 +45,8 @@
 
   <script>
   (function () {
-    // 默认密码 paper-edit-2026 的 SHA-256
-    var PASSWORD_HASH = "4f7aac656f61af8fc458d00d8b7bf6362d30049aa47a8679895cfc81ab96a10";
+    // 进入密码的 SHA-256（换密码见文件顶部注释）
+    var PASSWORD_HASH = "69fad9ee09b17ac0120fbb1e6f5110a78afa37c8f2da987cbd567fc50b29377b";
 
     var booted = false;
     var gate = document.getElementById('gate');
