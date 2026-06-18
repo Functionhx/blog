@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title></title>
+  <style>
+    html, body { height: 100%; margin: 0; }
+    body {
+      display: flex; align-items: center; justify-content: center;
+      font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: #f5f5f5; color: #222;
+    }
+    #gate { width: 100%; max-width: 300px; padding: 28px 24px; text-align: center; }
+    #gate input {
+      width: 100%; box-sizing: border-box; padding: 10px 12px;
+      font-size: 16px; border: 1px solid #ccc; border-radius: 8px; outline: none;
+    }
+    #gate input:focus { border-color: #2563eb; }
+    #gate button {
+      margin-top: 12px; width: 100%; padding: 10px; font-size: 16px;
+      border: 0; border-radius: 8px; background: #2563eb; color: #fff; cursor: pointer;
+    }
+    #gate button:hover { background: #1d4ed8; }
+    #gate .err { color: #dc2626; margin-top: 10px; font-size: 14px; min-height: 1.2em; }
+    #loading { color: #888; }
+  </style>
+</head>
+<body>
+  <!--
+    编辑后台（Sveltia CMS）密码门。
+    注意：这是前端软门（看源码可绕），真正的写权限靠 Sveltia 登录时的 GitHub 令牌。
+    换密码：本地执行  printf '%s' "你的密码" | shasum -a 256
+    把输出第一段填进下面的 PASSWORD_HASH。
+    默认密码：paper-edit-2026（请尽快改成你自己的）
+  -->
+  <div id="gate">
+    <form id="pw-form" autocomplete="off">
+      <input id="pw" type="password" placeholder="密码" autofocus />
+      <button type="submit">进入</button>
+      <p class="err" id="err"></p>
+    </form>
+  </div>
+  <div id="loading" style="display:none;">加载编辑器…</div>
+
+  <script>
+  (function () {
+    // 默认密码 paper-edit-2026 的 SHA-256
+    var PASSWORD_HASH = "4f7aac656f61af8fc458d00d8b7bf6362d30049aa47a8679895cfc81ab96a10";
+
+    var booted = false;
+    var gate = document.getElementById('gate');
+    var loading = document.getElementById('loading');
+    var form = document.getElementById('pw-form');
+    var pw = document.getElementById('pw');
+    var err = document.getElementById('err');
+
+    function sha256(str) {
+      var buf = new TextEncoder().encode(str);
+      return crypto.subtle.digest('SHA-256', buf).then(function (hash) {
+        return Array.prototype.map.call(new Uint8Array(hash), function (b) {
+          return ('0' + b.toString(16)).slice(-2);
+        }).join('');
+      });
+    }
+
+    function boot() {
+      if (booted) return;
+      booted = true;
+      sessionStorage.setItem('edit-unlocked', '1');
+      gate.style.display = 'none';
+      loading.style.display = 'block';
+      var s = document.createElement('script');
+      s.src = 'https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js';
+      document.body.appendChild(s);
+    }
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      err.textContent = '';
+      var h = await sha256(pw.value);
+      if (h === PASSWORD_HASH) {
+        boot();
+      } else {
+        err.textContent = '密码不对';
+        pw.value = '';
+        pw.focus();
+      }
+    });
+
+    // 同一标签页会话内已解锁过则直接进（关掉标签页后需重新输密码）
+    if (sessionStorage.getItem('edit-unlocked') === '1') {
+      boot();
+    }
+  })();
+  </script>
+</body>
+</html>

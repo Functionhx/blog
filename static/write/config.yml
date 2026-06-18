@@ -1,0 +1,32 @@
+# Sveltia CMS 配置
+# 认证：不设 base_url → 登录页出现「Sign In with Token」按钮，粘贴 GitHub 访问令牌即可（令牌存浏览器，零服务器）。
+backend:
+  name: github
+  repo: Functionhx/functionhx.github.io
+  branch: main
+
+# 期刊图：CMS 上传的图片落到 static/images/，部署后在 /images/ 引用
+media_folder: "static/images"
+public_folder: "/images"
+
+site_url: https://functionhx.github.io/
+
+collections:
+  - name: "posts"
+    label: "文章"
+    label_singular: "文章"
+    folder: "content/posts"
+    create: true
+    delete: true          # 允许增改删
+    format: "md"
+    extension: "md"
+    # 日期前缀避免中文标题 slug 化后为空；中文标题可在编辑器里手动改文件名
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "标题", name: "title", widget: "string" }
+      - { label: "发布日期", name: "date", widget: "datetime" }
+      - { label: "草稿", name: "draft", widget: "boolean", default: false }
+      - { label: "摘要描述", name: "description", widget: "string", required: false }
+      - { label: "标签", name: "tags", widget: "list", required: false }
+      - { label: "分类", name: "categories", widget: "list", required: false }
+      - { label: "正文", name: "body", widget: "markdown" }
