@@ -1,7 +1,7 @@
 {{- /*
   隐藏入口与彩蛋（覆盖主题自带的空 extend_footer.html 钩子；Hugo 0.146+ 项目 _partials 优先于主题）：
   1) 页脚非链接区域 3 秒内连点 5 次 → 跳编辑后台 /write/（可见性层，真写权限靠令牌）。
-  2) 菜单注入 ❤️：单击心跳一下（像装饰）；连点 3 次 → 弹出只给她的悄悄话（overlay）。
+  2) 顶部 ❤️（在 header 里）：单击心跳一下；连点 3 次 → 弹出只给她的悄悄话（overlay）。
 */ -}}
 <style>
   @keyframes ln-pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.4)} }
@@ -46,23 +46,13 @@
     });
   }
 
-  // 2) 菜单爱心：单击心跳，连点 3 次弹悄悄话
-  var menu = document.getElementById('menu');
+  // 2) 顶部 ❤️（在 header 里）：单击心跳，连点 3 次弹悄悄话
+  var heart = document.getElementById('love-trigger');
   var overlay = document.getElementById('love-note-overlay');
-  if (menu) {
-    var li = document.createElement('li');
-    var a = document.createElement('a');
-    a.href = '#';
-    var span = document.createElement('span');
-    span.textContent = '❤️';
-    a.appendChild(span);
-    li.appendChild(a);
-    menu.appendChild(li);
-
+  if (heart) {
     var n = 0, t = null;
-    a.addEventListener('click', function (e) {
-      e.preventDefault();
-      a.classList.remove('ln-pulse'); void a.offsetWidth; a.classList.add('ln-pulse'); // 心跳
+    heart.addEventListener('click', function () {
+      heart.classList.remove('ln-pulse'); void heart.offsetWidth; heart.classList.add('ln-pulse'); // 心跳
       n++;
       clearTimeout(t);
       t = setTimeout(function () { n = 0; }, 1500);

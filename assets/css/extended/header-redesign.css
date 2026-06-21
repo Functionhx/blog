@@ -1,0 +1,90 @@
+/* ===== 顶部重构：两行（搜索框置顶 + 导航居中） ===== */
+/* 覆盖 PaperMod header.css；extended CSS 在 core 之后加载，同特异性下胜出。 */
+
+.header-nav {
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: stretch;
+  row-gap: 0.4rem;
+  line-height: 1.4;
+  padding-top: 0.35rem;
+  padding-bottom: 0.35rem;
+}
+
+/* 第 1 行 */
+.header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap);
+  width: 100%;
+}
+.header-top .logo {
+  flex: 0 0 auto;
+  flex-wrap: nowrap;
+}
+.header-top .logo a {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+/* 显眼搜索框 */
+.header-search {
+  flex: 1 1 auto;
+  max-width: 440px;
+  margin: 0;
+}
+.header-search input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.5rem 0.95rem;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  color: var(--primary);
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  outline: none;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+.header-search input::placeholder { color: var(--secondary); }
+.header-search input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 16%, transparent);
+}
+
+/* 右侧动作 */
+.header-actions {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+}
+.love-trigger {
+  font-size: 1.15rem;
+  line-height: 1;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  padding: 0 0.35rem;
+  color: inherit;
+  transition: transform .15s ease;
+}
+.love-trigger:focus-visible {
+  outline: 2px solid var(--primary);
+  border-radius: 6px;
+}
+
+/* 第 2 行：居中导航 */
+.menu {
+  justify-content: center;
+  column-gap: var(--gap);
+  padding: 0 0 0.15rem;
+}
+
+/* 响应式：窄屏搜索框换到下一行，导航保持居中 */
+@media (max-width: 640px) {
+  .header-top { flex-wrap: wrap; }
+  .header-search { order: 3; flex: 1 1 100%; max-width: none; }
+}
