@@ -17,10 +17,9 @@ collections:
     label_singular: "文章"
     folder: "content/posts"
     create: true
-    delete: true          # 允许增改删
+    delete: true
     format: "md"
     extension: "md"
-    # 日期前缀避免中文标题 slug 化后为空；中文标题可在编辑器里手动改文件名
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
       - { label: "标题", name: "title", widget: "string" }
@@ -32,8 +31,8 @@ collections:
       - { label: "正文", name: "body", widget: "markdown" }
 
   - name: "critiques"
-    label: "拆解"
-    label_singular: "拆解"
+    label: "点评"
+    label_singular: "点评"
     folder: "content/critiques"
     create: true
     delete: true
@@ -59,4 +58,54 @@ collections:
       - { label: "标签", name: "tags", widget: "list", required: false }
       - { label: "发布日期", name: "date", widget: "datetime" }
       - { label: "草稿", name: "draft", widget: "boolean", default: true }
+      - { label: "正文", name: "body", widget: "markdown" }
+
+  - name: "bugs"
+    label: "BUG 日志"
+    label_singular: "BUG"
+    folder: "content/bugs"
+    create: true
+    delete: true
+    format: "md"
+    extension: "md"
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "标题", name: "title", widget: "string" }
+      - { label: "发布日期", name: "date", widget: "datetime" }
+      - { label: "草稿", name: "draft", widget: "boolean", default: true }
+      - { label: "标签", name: "tags", widget: "list", required: false }
+      - { label: "正文", name: "body", widget: "markdown" }
+
+  - name: "thoughts"
+    label: "思考"
+    label_singular: "思考"
+    folder: "content/thoughts"
+    create: true
+    delete: true
+    format: "md"
+    extension: "md"
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "标题", name: "title", widget: "string" }
+      - { label: "发布日期", name: "date", widget: "datetime" }
+      - { label: "草稿", name: "draft", widget: "boolean", default: true }
+      - { label: "标签", name: "tags", widget: "list", required: false }
+      - { label: "正文", name: "body", widget: "markdown" }
+
+  - name: "works"
+    label: "作品"
+    label_singular: "作品"
+    folder: "content/works"
+    create: true
+    delete: true
+    format: "md"
+    extension: "md"
+    slug: "{{slug}}"
+    fields:
+      - { label: "标题", name: "title", widget: "string" }
+      - { label: "一句话简介", name: "description", widget: "string", required: false }
+      - { label: "链接", name: "link", widget: "string", required: false }
+      - { label: "发布日期", name: "date", widget: "datetime" }
+      - { label: "草稿", name: "draft", widget: "boolean", default: false }
+      - { label: "标签", name: "tags", widget: "list", required: false }
       - { label: "正文", name: "body", widget: "markdown" }

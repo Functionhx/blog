@@ -36,14 +36,22 @@ menu:
       url: /posts/
       weight: 10
     - identifier: critiques
-      name: ⚔️ 拆解
+      name: 💬 点评
       url: /critiques/
       weight: 15
-    - identifier: archives
-      name: 📂 归档
-      url: /archives/
+    - identifier: bugs
+      name: 🐛 BUG 日志
+      url: /bugs/
       weight: 20
-    - identifier: tags
-      name: 🏷 标签
-      url: /tags/
+    - identifier: thoughts
+      name: 💡 思考
+      url: /thoughts/
+      weight: 25
+    - identifier: works
+      name: 🛠️ 作品
+      url: /works/
       weight: 30
+    - identifier: resume
+      name: 📄 个人简历
+      url: /resume/
+      weight: 35
