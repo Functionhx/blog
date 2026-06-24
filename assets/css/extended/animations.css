@@ -1,37 +1,20 @@
 /* ===== 鼠标动效样式（克制档） ===== */
 /* 配合 static/js/mouse-effects.js；JS 已在触屏/减少动效时整体不启用。 */
 
-/* 1) 光标尾迹 ✨/❤️ */
-.cursor-trail {
-  position: fixed;
-  z-index: 9998;
-  pointer-events: none;
-  user-select: none;
-  font-size: 13px;
-  line-height: 1;
-  transform: translate(-50%, -50%);
-  will-change: transform, opacity;
-  animation: trail-pop 0.85s ease-out forwards;
-}
-@keyframes trail-pop {
-  0%   { opacity: 0.9; transform: translate(-50%, -50%)   scale(0.5)  rotate(0deg); }
-  100% { opacity: 0;   transform: translate(-50%, -140%)  scale(1.15) rotate(35deg); }
-}
-
-/* 2) 磁吸：让位移平滑；链接悬停轻微变色 */
+/* 1) 磁吸：让位移平滑；链接悬停轻微变色 */
 .menu a,
 .header-actions button {
   transition: transform 0.18s ease, color 0.18s ease;
 }
 .menu a:hover { color: var(--primary); }
 
-/* 3) 卡片 3D 倾斜：进入/离开平滑（.crit-card 已在 critiques.css 有 transform 过渡） */
+/* 2) 卡片 3D 倾斜：进入/离开平滑（.crit-card 已在 critiques.css 有 transform 过渡） */
 .post-entry,
 .first-entry {
   transition: transform 0.15s ease;
 }
 
-/* 4) 光标聚光灯：跟随 --mx/--my；plus-lighter 只增亮不遮挡文字，暗色下更明显 */
+/* 3) 光标聚光灯：跟随 --mx/--my；plus-lighter 只增亮不遮挡文字，暗色下更明显 */
 .cursor-spotlight {
   position: fixed;
   inset: 0;
